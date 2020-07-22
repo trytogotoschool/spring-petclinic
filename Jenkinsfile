@@ -14,6 +14,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'mv target/spring*.jar /home/vagrant/data/spring-pet.jar'
+                sh 'systemctl restart spring-pet'
             }
         }
     }
