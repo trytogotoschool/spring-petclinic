@@ -8,7 +8,12 @@ pipeline {
         }
         stage('Test') {
             steps {
-                step( [ $class: 'JacocoPublisher' ] )
+               jacoco( 
+                      execPattern: 'target/*.exec',
+                      classPattern: 'target/classes',
+                      sourcePattern: 'src/main/java',
+                      exclusionPattern: 'src/test*'
+                      )
             }
         }
         stage('Deploy') {
