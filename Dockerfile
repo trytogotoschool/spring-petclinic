@@ -8,7 +8,7 @@ WORKDIR /prod
 EXPOSE 8081
 
 COPY . ./
-RUN mvn package
+RUN ./mvnw package
 COPY target/spring*.jar ./spring-pet.jar
 CMD ["java", "-jar", "/prod/spring-pet.jar", "--server.port=8081"]
 
