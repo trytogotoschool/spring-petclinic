@@ -6,6 +6,14 @@ pipeline {
                 sh "mvn package"
             }
         }
+        stage('Test') {
+              jacoco( 
+                  execPattern: 'target/*.exec',
+                  classPattern: 'target/classes',
+                  sourcePattern: 'src/main/java',
+                  exclusionPattern: 'src/test*'
+            )
+        }
         stage('Deploy') {
             steps {
                 sh "sudo mv target/spring*.jar /home/vagrant/prod/spring-pet.jar"
