@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "docker run -d -p 8081:8081  -e MYSQL_URL=jdbc:mysql://172.17.0.2/petclinic spring-pet "
+                sh "docker-compose up -d"
                  
             }
         }
