@@ -18,8 +18,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "sudo mv target/spring*.jar /home/vagrant/prod/spring-pet.jar"
-                sh "sudo systemctl restart spring-pet"
+                sh "docker run -p 8081:8081 spring-pet"
+                 
             }
         }
     }
