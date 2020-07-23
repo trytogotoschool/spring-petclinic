@@ -2,7 +2,7 @@
 FROM openjdk:8-jdk-alpine AS development
 
 # Create app directory into Docker container
-WORKDIR /prod
+WORKDIR /app/build
 # Build project
 COPY . ./
 RUN ./mvnw package
@@ -15,10 +15,9 @@ FROM openjdk:8-jdk-alpine AS production
 EXPOSE 8081
 
 # Create app directory into Docker container
-WORKDIR /prod
+WORKDIR app/prod
 
 # Bundle app source
-COPY --from=development /prod/target/*.jar /target
-
+COPY --from=development /app/build/target/*.jar /app/prod/spring-pet.jar
 # Let's run the app!
-CMD ["java", "-jar", "/prod/target/spring-pet.jar", "--server.port=8081"]
+CMD ["java", "-jar", "app/prod/spring-pet.jar", "--server.port=8081"]
