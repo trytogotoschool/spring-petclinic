@@ -7,7 +7,6 @@ WORKDIR /prod
 COPY . ./
 RUN ./mvnw package
 
-# --------------------------------
 
 # Production build
 FROM openjdk:8-jdk-alpine AS production
