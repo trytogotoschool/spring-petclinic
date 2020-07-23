@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                
                 sh "docker build -t spring-pet ."
             }
         }
