@@ -19,7 +19,7 @@ EXPOSE 8081
 WORKDIR /prod
 
 # Bundle app source
-COPY --from=development /prod/target/*.jar ./target
+COPY --from=development /prod/target/*.jar /target
 
 # Let's run the app!
 CMD ["java", "-jar", "/prod/target/spring-pet.jar", "--server.port=8081"]
