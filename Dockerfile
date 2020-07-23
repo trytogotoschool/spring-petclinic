@@ -20,4 +20,4 @@ WORKDIR app/prod
 # Bundle app source
 COPY --from=development /app/build/target/*.jar /app/prod/spring-pet.jar
 # Let's run the app!
-CMD ["java", "-jar", "/app/prod/spring-pet.jar", "--server.port=8081"]
+CMD ["java", "-jar", "/app/prod/spring-pet.jar", "--spring.profiles.active=mysql", "--server.port=8081"]
