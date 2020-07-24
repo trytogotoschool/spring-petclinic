@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: traefik:v2.2
+    container_name: traefik
+    ports:
+      - "8081:80"
+      - "443:443"
+      - "8090:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/traefik.toml:/etc/traefik/traefik.toml
+      - $PWD/acme.json:/acme.json
+    networks:
+      - web
+  springpet:
+    image: spring-pet
+    depends_on:
+      - mysql
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.springpet.rule=Host(`192.168.33.10`)"
+      - "traefik.http.routers.springpet.entryPoints=websecure"
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
+    volumes:
+      - "./conf.d:/etc/mysql/conf.d:ro"
+    networks:
+     - web
+networks:
+  web:
+    external: true
