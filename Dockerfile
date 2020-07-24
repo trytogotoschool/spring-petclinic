@@ -1,11 +1,16 @@
 # Development build
 FROM openjdk:8-jdk-alpine AS development
 
-# Create app directory into Docker container
 WORKDIR /app/build
 # Build project
-COPY . ./
-RUN ./mvnw package
+COPY .mvn /app/build/.mvn
+COPY pom.xml /app/build/pom.xml
+COPY mvnw /app/build/mvnw
+RUN chmod +x mvnw
+RUN ./mvnw dependency:go-offline
+COPY src /app/build/src
+RUN ./mvnw package -DskipTests
+
 
 
 # Production build
